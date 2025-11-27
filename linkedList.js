@@ -5,6 +5,10 @@ export class LinkedList {
     this.headNode = null;
   }
 
+  // ------------------------
+  // BASIC METHODS
+  // ------------------------
+
   append(value) {
     const newNode = new Node(value);
 
@@ -69,6 +73,7 @@ export class LinkedList {
   pop() {
     if (!this.headNode) return null;
 
+    // Caso exista só 1
     if (this.headNode.nextNode === null) {
       this.headNode = null;
       return;
@@ -116,5 +121,61 @@ export class LinkedList {
     }
 
     return str + "null";
+  }
+
+  // ------------------------
+  // EXTRA CREDIT
+  // ------------------------
+
+  insertAt(value, index) {
+    if (index < 0 || index > this.size()) return null;
+
+    // Inserir no início
+    if (index === 0) {
+      this.prepend(value);
+      return;
+    }
+
+    // Inserir no final
+    if (index === this.size()) {
+      this.append(value);
+      return;
+    }
+
+    const newNode = new Node(value);
+    let current = this.headNode;
+    let previous = null;
+    let i = 0;
+
+    while (i < index) {
+      previous = current;
+      current = current.nextNode;
+      i++;
+    }
+
+    previous.nextNode = newNode;
+    newNode.nextNode = current;
+  }
+
+  removeAt(index) {
+    if (index < 0 || index >= this.size()) return null;
+
+    // Remover primeiro
+    if (index === 0) {
+      this.headNode = this.headNode.nextNode;
+      return;
+    }
+
+    let current = this.headNode;
+    let previous = null;
+    let i = 0;
+
+    while (i < index) {
+      previous = current;
+      current = current.nextNode;
+      i++;
+    }
+
+    previous.nextNode = current.nextNode;
   }
 }
